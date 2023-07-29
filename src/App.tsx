@@ -1,26 +1,34 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { observer } from 'mobx-react-lite';
 
-function App() {
+import { createRootStore } from './store';
+import AddTodo from './Todo/AddTodo';
+import RenderTodos from './Todo/RenderTodos';
+import ActionsBar from './ActionsBar';
+
+const [todoStore, undoManager] = createRootStore();
+
+const App = observer(() => {
+  const style = {
+    container: 'flex flex-col items-center px-3 pt-6',
+    title: 'text-4xl',
+    todosWrap: 'flex flex-col',
+  };
+  const title = 'Yet Another ToDo list...';
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className={style.container}>
+      <h1 className={style.title}>{title}</h1>
+
+      <div className={style.todosWrap}>
+        <AddTodo list={todoStore} />
+
+        <RenderTodos list={todoStore.ongoing} />
+        <RenderTodos list={todoStore.done} title="DONE" isDone />
+
+        <ActionsBar undoManager={undoManager} />
+      </div>
     </div>
   );
-}
+});
 
 export default App;
