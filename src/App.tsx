@@ -5,7 +5,7 @@ import AddTodo from './Todo/AddTodo';
 import RenderTodos from './Todo/RenderTodos';
 import ActionsBar from './ActionsBar';
 
-const [todoStore, undoManager] = createRootStore();
+export const [todoStore, undoManager] = createRootStore();
 
 const App = observer(() => {
   const style = {
@@ -20,12 +20,12 @@ const App = observer(() => {
       <h1 className={style.title}>{title}</h1>
 
       <div className={style.todosWrap}>
-        <AddTodo list={todoStore} />
+        <AddTodo />
 
-        <RenderTodos list={todoStore.ongoing} />
-        <RenderTodos list={todoStore.done} title="DONE" isDone />
+        <RenderTodos />
+        <RenderTodos isDone />
 
-        <ActionsBar undoManager={undoManager} />
+        <ActionsBar />
       </div>
     </div>
   );

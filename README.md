@@ -1,5 +1,12 @@
 # Tested TODO app
 
+Simple TODO list.
+Supports undo/redo operations, mobile orientation.
+
+Stack/libs: TypeScript, ReactJS, Mobx keystone, react-aria, react-icons, TailwindCSS, Vercel.
+
+Deploy: https://test-todo-ochre.vercel.app/
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts

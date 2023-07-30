@@ -10,7 +10,7 @@ import {
 } from 'mobx-keystone';
 
 import { v4 as uuid } from 'uuid';
-import { defaultDoneTodos, defaultOngoingTodos } from './constants';
+import { defaultTodos } from './constants';
 
 @model('YetAnotherApp/Todo')
 export class Todo extends Model({
@@ -30,7 +30,6 @@ export class TodoList extends Model({
 }) {
   @modelAction
   add(todo: Todo) {
-    console.log(todo.id, todo.value, todo.done);
     this.todos.push(todo);
   }
 
@@ -44,25 +43,43 @@ export class TodoList extends Model({
 
   @computed
   get ongoing() {
-    return this.todos.filter((t) => !t.done);
+    return this.todos.filter((t: Todo) => !t.done);
   }
 
   @computed
   get done() {
-    return this.todos.filter((t) => t.done);
+    return this.todos.filter((t: Todo) => t.done);
+  }
+
+  @computed
+  get all(): Todo[] {
+    return this.todos;
   }
 }
 
 export function createRootStore(): [TodoList, UndoManager] {
-  const ongoingTodos = defaultOngoingTodos.map((todo) => {
-    return new Todo({ value: todo });
-  });
-  const doneTodos = defaultDoneTodos.map((todo) => {
-    return new Todo({ value: todo, done: true });
-  });
+  // getting keys from prev localStorage
+  const keys = localStorage.getItem('todoStore');
+
+  let todos;
+  if (keys !== null) {
+    todos =
+      keys.length > 0
+        ? keys.split(' ').map((key) => {
+            return new Todo({
+              value: localStorage.getItem(`${key}_val`) || '',
+              done: localStorage.getItem(`${key}_done`) === '1' ? true : false,
+            });
+          })
+        : [];
+  } else {
+    todos = defaultTodos.map((todo) => {
+      return new Todo({ value: todo.value, done: todo.done });
+    });
+  }
 
   const rootStore = new TodoList({
-    todos: [...ongoingTodos, ...doneTodos],
+    todos,
   });
 
   const undoManager = undoMiddleware(rootStore);

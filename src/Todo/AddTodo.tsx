@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { GoPlus } from 'react-icons/go';
 
-import { Todo, TodoList } from '../store';
+import { Todo } from '../store';
+import { todoStore } from '../App';
 
 const useInputValue = (defaultValue: string) => {
   const [value, setValue] = useState(defaultValue);
@@ -16,11 +17,7 @@ const useInputValue = (defaultValue: string) => {
   };
 };
 
-interface IAddTodo {
-  list: TodoList;
-}
-
-const AddTodo: React.FC<IAddTodo> = ({ list }) => {
+const AddTodo: React.FC = () => {
   const style = {
     container: 'flex my-4',
     input: 'rounded-l-md border py-1.5 px-3 focus:border-green-600 focus:ring-0 focus:outline-none',
@@ -35,7 +32,7 @@ const AddTodo: React.FC<IAddTodo> = ({ list }) => {
     if (input.value().trim()) {
       const todo = new Todo({ value: input.value() });
 
-      list.add(todo);
+      todoStore.add(todo);
       input.clear();
     }
   };
