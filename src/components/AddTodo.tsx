@@ -19,9 +19,10 @@ const useInputValue = (defaultValue: string) => {
 
 const AddTodo: React.FC = () => {
   const style = {
-    container: 'flex my-4',
-    input: 'rounded-l-md border py-1.5 px-3 focus:border-green-600 focus:ring-0 focus:outline-none',
-    button: 'rounded-r-md bg-green-600 text-white text-4xl',
+    container: 'flex mb-4 mt-8',
+    input: `rounded-l-md border py-1.5 px-3 hover:bg-gray-100 
+      focus:border-green-600 focus:ring-0 focus:outline-none`,
+    button: 'rounded-r-md bg-green-600 text-white text-4xl hover:bg-green-700',
   };
 
   const input = useInputValue('');

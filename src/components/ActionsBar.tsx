@@ -3,15 +3,16 @@ import { observer } from 'mobx-react-lite';
 import cn from 'classnames';
 import { BsArrowClockwise, BsArrowCounterclockwise } from 'react-icons/bs';
 
-import { todoStore, undoManager } from './App';
-import { Todo } from './store';
+import { todoStore, undoManager } from '../App';
+import { Todo } from '../store';
 
 const ActionsBar: React.FC = observer(() => {
   const style = {
     container: 'flex justify-end mb-4',
-    actionButton: 'border border-black rounded-md text-xl font-bold p-2 ml-2',
+    actionButton: 'border border-black rounded-md text-xl font-bold p-2 ml-2 hover:bg-gray-100',
     inactive: 'text-gray-500 border-gray-500',
-    saveButton: 'border-2 border-green-600 rounded-md text-green-600 font-medium px-3 py-1.5 ml-2',
+    saveButton:
+      'border-2 border-green-600 rounded-md text-green-600 font-medium px-3 py-1.5 ml-2 hover:bg-green-100',
   };
 
   const handleUndo = () => {

@@ -1,9 +1,10 @@
 import { observer } from 'mobx-react-lite';
 
 import { createRootStore } from './store';
-import AddTodo from './Todo/AddTodo';
-import RenderTodos from './Todo/RenderTodos';
-import ActionsBar from './ActionsBar';
+
+import AddTodo from './components/AddTodo';
+import RenderTodos from './components/RenderTodos';
+import ActionsBar from './components/ActionsBar';
 
 export const [todoStore, undoManager] = createRootStore();
 
@@ -13,6 +14,7 @@ const App = observer(() => {
     title: 'text-4xl',
     todosWrap: 'flex flex-col',
   };
+
   const title = 'Yet Another ToDo list...';
 
   return (

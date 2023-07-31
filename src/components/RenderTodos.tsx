@@ -40,34 +40,37 @@ const RenderTodos: React.FC<IRenderTodos> = observer(({ isDone = false }) => {
 
   const gridList = isDone ? todoStore.done : todoStore.ongoing;
 
-  const renderGridList = (
-    <GridList aria-label="Ongoing todos list" className={style.todoList}>
-      {gridList.map((todo: Todo) => {
-        return (
-          <Item key={todo.id} textValue={todo.value} className={style.todoItemWrap}>
-            <div className={style.todoContent}>
-              <div>
-                <button onClick={() => handleDone(todo)} className={style.checkButton}>
-                  {isDone ? <BsFillCheckCircleFill /> : <BsCircle />}
+  let renderGridList;
+  if (gridList.length > 0) {
+    renderGridList = (
+      <GridList aria-label="Ongoing todos list" className={style.todoList}>
+        {gridList.map((todo: Todo) => {
+          return (
+            <Item key={todo.id} textValue={todo.value} className={style.todoItemWrap}>
+              <div className={style.todoContent}>
+                <div>
+                  <button onClick={() => handleDone(todo)} className={style.checkButton}>
+                    {isDone ? <BsFillCheckCircleFill /> : <BsCircle />}
+                  </button>
+                  <span className={style.todoText}>{todo.value}</span>
+                </div>
+                <button onClick={() => handleRemove(todo)} className={style.removeTodo}>
+                  <AiFillCloseCircle />
                 </button>
-                <span className={style.todoText}>{todo.value}</span>
               </div>
-              <button onClick={() => handleRemove(todo)} className={style.removeTodo}>
-                <AiFillCloseCircle />
-              </button>
-            </div>
-          </Item>
-        );
-      })}
-    </GridList>
-  );
-
-  const noItems = <div className={style.noItems}>No items yet</div>;
+            </Item>
+          );
+        })}
+      </GridList>
+    );
+  } else {
+    renderGridList = <div className={style.noItems}>No items yet</div>;
+  }
 
   return (
     <div className={style.container}>
       <h3 className={style.title}>{title}</h3>
-      {gridList.length > 0 ? renderGridList : noItems}
+      {renderGridList}
     </div>
   );
 });
